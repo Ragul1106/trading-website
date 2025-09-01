@@ -1,0 +1,51 @@
+{% extends 'trading/layout/base.html' %} 
+
+{% block content %}
+  <section class="about-banner" style="width: 100%;">
+    {% if content.banner_image %}
+      <img src="{{ content.banner_image.url }}" alt="Banner Image" style="width:100%; height:auto;">
+    {% endif %}
+  </section>
+
+  <!-- Title and Description -->
+  <section class="about-title-description" style="padding: 40px; text-align: center;">
+    <h1>{{ content.title }}</h1>
+    <p>{{ content.description }}</p>
+  </section>
+
+  <!-- Section 1: Image Left, Text Right -->
+  <section class="about-section1" style="display: flex; gap: 20px; padding: 40px; align-items: center;">
+    {% if content.section1_image %}
+      <div class="image-left" style="flex: 1;">
+        <img src="{{ content.section1_image.url }}" alt="Section 1 Image" style="width: 100%; height: auto;">
+      </div>
+    {% endif %}
+    <div class="text-right" style="flex: 1;">
+      <p>{{ content.section1_text }}</p>
+    </div>
+  </section>
+
+  <!-- Section 2: Image Right, Text Left -->
+  <section class="about-section2" style="display: flex; gap: 20px; padding: 40px; align-items: center;">
+    <div class="text-left" style="flex: 1;">
+      <p>{{ content.section2_text }}</p>
+    </div>
+    {% if content.section2_image %}
+      <div class="image-right" style="flex: 1;">
+        <img src="{{ content.section2_image.url }}" alt="Section 2 Image" style="width: 100%; height: auto;">
+      </div>
+    {% endif %}
+  </section>
+
+  <!-- Row of 4 Images -->
+  <section class="about-row-images" style="display: flex; gap: 15px; padding: 40px; justify-content: center;">
+  {% for img in row_images %}
+    {% if img %}
+      <div style="flex: 1; max-width: 23%;">
+        <img src="{{ img.url }}" alt="Row Image" style="width: 100%; height: auto;">
+      </div>
+    {% endif %}
+  {% endfor %}
+</section>
+{% endblock %}
+
