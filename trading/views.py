@@ -3,7 +3,14 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.contrib.auth import logout
-from .models import AboutContent
+from .models import AboutContent, BlogCategory, BlogPost
+from .models import SiteAsset  
+
+
+# Helper to fetch bull image dynamically
+def get_bull_image():
+    return SiteAsset.objects.filter(key="bull").first()
+
 
 def redirect_to_login(request):
     if request.user.is_authenticated:
@@ -55,7 +62,6 @@ def home(request):
 
 def about_view(request):
     content = AboutContent.objects.first()
-    # Prepare a list of row images
     row_images = [
         content.row_image_1,
         content.row_image_2,
@@ -64,6 +70,23 @@ def about_view(request):
     ] if content else []
 
     return render(request, 'trading/layout/about.html', {'content': content, 'row_images': row_images})
+
+
+
+def blog_page(request):
+    categories = BlogCategory.objects.all()
+    selected_category = request.GET.get('category')
+    if selected_category:
+        posts = BlogPost.objects.filter(category__name=selected_category).order_by('-publish_date')
+    else:
+        posts = BlogPost.objects.all().order_by('-publish_date')
+    context = {
+        'categories': categories,
+        'posts': posts,
+        'selected_category': selected_category
+    }
+    return render(request, 'layout/blog.html', context)
+
 
 def user_logout(request):
     logout(request)
