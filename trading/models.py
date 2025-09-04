@@ -1,6 +1,3 @@
-from django.contrib import admin
-from django.contrib.auth.models import User
-from django.contrib.auth.admin import UserAdmin
 from django.db import models
 
  
@@ -10,11 +7,6 @@ class SiteAsset(models.Model):
 
     def __str__(self):
         return self.key
-    
-class CustomUserAdmin(UserAdmin):
-    list_display = ('username', 'first_name', 'email', 'is_staff', 'is_active')
-    search_fields = ('username', 'email')
-    ordering = ('username',)
     
 
 class AboutContent(models.Model):
@@ -44,17 +36,15 @@ class WhyChooseItem(models.Model):
     def _str_(self):
         return self.title
 
-from django.db import models
-
 class BlogHero(models.Model):
     title = models.CharField(max_length=200, default="Don’t Just Gain info")
     subtitle = models.CharField(max_length=200, default="Build Knowledge")
     description = models.TextField(
         default="Whether you’re a new investor or a market expert, we’ve got something for everyone at the TRACO blog"
     )
-    image = models.ImageField(upload_to="blog/", blank=True, null=True)
-    sparkle = models.ImageField(upload_to="blog/", blank=True, null=True)
-
+    image = models.ImageField(upload_to="blog/", blank=True, null=True)  
+    sparkle = models.ImageField(upload_to="blog/", blank=True, null=True)  
+    
     class Meta:
         verbose_name = "Blog Hero_Section"
         verbose_name_plural = "Blog Hero_Section"
@@ -74,9 +64,9 @@ class BlogTab(models.Model):
     class Meta:
         verbose_name = "Blog tabs"
         verbose_name_plural = "Blog tabs"
-
     def __str__(self):
         return self.get_tab_key_display()
+
 
 class BlogPost(models.Model):
     CATEGORY_CHOICES = [
@@ -95,8 +85,5 @@ class BlogPost(models.Model):
     class Meta:
         verbose_name = "Blog Posts"
         verbose_name_plural = "Blog Posts"
-        
     def __str__(self):
         return self.title
-    
-    
