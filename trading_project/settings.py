@@ -45,11 +45,11 @@ INSTALLED_APPS = [
     'trading',
 ]
 
-# if not DEBUG:
-#     INSTALLED_APPS.extend([
-#         'cloudinary_storage',
-#         'cloudinary',
-#     ])
+if not DEBUG:
+    INSTALLED_APPS.extend([
+        'cloudinary_storage',
+        'cloudinary',
+    ])
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -75,6 +75,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -118,7 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -130,25 +131,31 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / "static"]
-STATIC_ROOT = "staticfiles"
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [BASE_DIR / 'static']
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / "media"
+# Media files configuration
+if DEBUG:
+    # Development - local files
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = BASE_DIR / 'media'
+else:
+    # Production - Cloudinary
+    MEDIA_URL = '/media/'  # Keep this for admin compatibility
+    MEDIA_ROOT = BASE_DIR / 'media'  # Keep this for admin compatibility
+    
+    # Cloudinary configuration
+    CLOUDINARY_STORAGE = {
+        'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
+        'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
+        'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
+    }
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-# Local static storage (development)
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-
-# if not DEBUG:  # Production with Cloudinary
-#     DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
-#     STATICFILES_STORAGE = "cloudinary_storage.storage.StaticHashedCloudinaryStorage"
-
-#     CLOUDINARY_STORAGE = {
-#         "CLOUD_NAME": os.getenv("CLOUDINARY_CLOUD_NAME"),
-#         "API_KEY": os.getenv("CLOUDINARY_API_KEY"),
-#         "API_SECRET": os.getenv("CLOUDINARY_API_SECRET"),
-#     }
-
+# Crispy Forms
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 # Auth redirects
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "login"
