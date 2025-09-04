@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.contrib.auth import logout
 from .models import AboutContent, SiteAsset
-
+from .models import BlogHero, BlogTab, BlogPost
 
 def get_bull_image():
     return SiteAsset.objects.filter(key="bull").first()
@@ -77,3 +77,15 @@ def about_view(request):
         'why_items': why_items
     }) 
     
+
+
+def blog(request):
+    hero = BlogHero.objects.first()
+    tabs = BlogTab.objects.all().order_by("id")
+    posts = BlogPost.objects.all().order_by("-date")
+
+    return render(
+        request,
+        "trading/layout/blog.html",
+        {"hero": hero, "tabs": tabs, "posts": posts}
+    )

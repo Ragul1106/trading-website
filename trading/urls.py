@@ -4,11 +4,14 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('', views.redirect_to_login, name="redirect"),
+    # path('home/', views.home, name="home"),
     path('register/', views.register, name="register"),
     path('login/', views.user_login, name="login"),
     path('home/', views.home, name="home"),
     path('logout/', views.user_logout, name="logout"), 
     path('about/', views.about_view, name="about"),
+    path('blog/', views.blog, name="blog"),
+    # path("partner/", views.partner, name="partner"),
     
 ]
 

@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
 from .models import SiteAsset, AboutContent, WhyChooseItem
-
+from .models import BlogTab, BlogPost, BlogHero
 
 admin.site.unregister(User)
 class WhyChooseInline(admin.TabularInline):
@@ -21,3 +21,18 @@ class CustomUserAdmin(UserAdmin):
     search_fields = ("username", "email")
     ordering = ("username",)
 
+
+@admin.register(BlogHero)
+class BlogHeroAdmin(admin.ModelAdmin):
+    list_display = ("title", "subtitle")
+
+@admin.register(BlogTab)
+class BlogTabAdmin(admin.ModelAdmin):
+    list_display = ("tab_key",)
+
+@admin.register(BlogPost)
+class BlogPostAdmin(admin.ModelAdmin):
+    list_display = ("title", "category", "date")
+    list_filter = ("category",)
+    search_fields = ("title", "short_desc")
+    
