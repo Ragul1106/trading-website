@@ -1,15 +1,9 @@
-{% extends "trading/layout/base.html" %} 
-{% load static %} 
-{% block title %}Login{% endblock %} 
-{% block content %}
+{% extends "trading/layout/base.html" %} {% load static %} {% block title
+%}Login{% endblock %} {% block content %}
 <div class="row d-flex align-items-center">
   <div class="col-md-6 text-center">
-    {% if bull %}
-    <img
-      src="{{ bull.image.url }}"
-      class="img-fluid"
-      style="max-width: 350px"
-    />
+    {% if bull_url %}
+    <img src="{{ bull_url }}" class="img-fluid" style="max-width: 350px" />
     {% else %}
     <img
       src="{% static 'images/bull.png' %}"
