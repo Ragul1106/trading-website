@@ -1,13 +1,18 @@
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
-from .models import SiteAsset  
-from .models import AboutContent
+from .models import SiteAsset, AboutContent, WhyChooseItem
+
 
 admin.site.unregister(User)
+class WhyChooseInline(admin.TabularInline):
+    model = WhyChooseItem
+    extra = 1
+
 @admin.register(AboutContent)
 class AboutContentAdmin(admin.ModelAdmin):
-    list_display = ('title',)
+    list_display = ('banner_title', 'who_title')
+    inlines = [WhyChooseInline]
 
 
 @admin.register(User)
@@ -16,8 +21,3 @@ class CustomUserAdmin(UserAdmin):
     search_fields = ("username", "email")
     ordering = ("username",)
 
-
-@admin.register(SiteAsset)
-class SiteAssetAdmin(admin.ModelAdmin):
-    list_display = ("key", "image")
-    search_fields = ("key",)

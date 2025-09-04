@@ -124,21 +124,24 @@ USE_I18N = True
 
 USE_TZ = True
 
-CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
-CRISPY_TEMPLATE_PACK = "bootstrap5"
+# CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+# CRISPY_TEMPLATE_PACK = "bootstrap5"
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / "static"]   
-STATIC_ROOT = BASE_DIR / "staticfiles"   
-# WHitenoise
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"  
+STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = "staticfiles"
 
-if not DEBUG:  # Production on Render
-    # INSTALLED_APPS += ["cloudinary", "cloudinary_storage"]
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / "media"
 
+# Local static storage (development)
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+if not DEBUG:  # Production with Cloudinary
     DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+    STATICFILES_STORAGE = "cloudinary_storage.storage.StaticHashedCloudinaryStorage"
 
     CLOUDINARY_STORAGE = {
         "CLOUD_NAME": os.getenv("CLOUDINARY_CLOUD_NAME"),
@@ -146,17 +149,8 @@ if not DEBUG:  # Production on Render
         "API_SECRET": os.getenv("CLOUDINARY_API_SECRET"),
     }
 
-    MEDIA_URL = "/media/" 
-    MEDIA_ROOT = BASE_DIR / "media"
-
-else:  
-    MEDIA_URL = "/media/"
-    MEDIA_ROOT = BASE_DIR / "media"
-
+# Auth redirects
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "login"
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

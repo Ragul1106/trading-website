@@ -1,49 +1,111 @@
-{% extends 'trading/layout/base.html' %} 
+{% extends 'trading/layout/base.html' %} {% load static %} {% block content %}
 
-{% block content %}
-  <section class="about-banner" style="width: 100%;">
-    {% if content.banner_image %}
-      <img src="{{ content.banner_image.url }}" alt="Banner Image" style="width:100%; height:auto;">
-    {% endif %}
-  </section>
+<section class="position-relative w-100">
+  {% if content.banner_image %}
+  <!-- <img src="{{ content.banner_image.url }}" alt="Banner" class="w-100" style="height:auto;"> -->
+  <img
+    src="{% static 'images/a_banner.jpg' %}"
+    alt="Banner"
+    class="w-100 rounded-5"
+    style="height: auto"
+  />
+  {% endif %}
+  <div class="position-absolute top-50 start-50 translate-middle text-center">
+    <h1
+      class="text-white fw-bold px-4 py-2"
+      style="
+        background: linear-gradient(90deg, #070c0e, #bafd02);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: 400%;
+      "
+    >
+      {{ content.banner_title }}
+    </h1>
+  </div>
+</section>
 
-  <section class="about-title-description" style="padding: 40px; text-align: center;">
-    <h1>{{ content.title }}</h1>
-    <p>{{ content.description }}</p>
-  </section>
+<section class="text-center py-5 text-white">
+  <h2
+    class="fw-bold"
+    style="
+      background: linear-gradient(90deg, #d9d9d9, #bafd02);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    "
+  >
+    {{ content.who_title }}
+  </h2>
+  <p class="mt-4 mx-auto" style="font-size: 30px">{{ content.who_para1 }}</p>
+  <p class="mt-2 mx-auto" style="font-size: 30px">{{ content.who_para2 }}</p>
+</section>
 
-  <section class="about-section1" style="display: flex; gap: 20px; padding: 40px; align-items: center;">
-    {% if content.section1_image %}
-      <div class="image-left" style="flex: 1;">
-        <img src="{{ content.section1_image.url }}" alt="Section 1 Image" style="width: 100%; height: auto;">
+<section class="container py-5">
+  <div class="row align-items-center g-4">
+    {% if content.mission_image %}
+    <div class="col-md-6 position-relative">
+      <img
+        src="{% static 'images/a_image2.png' %}"
+        alt="Mission"
+        class="img-fluid rounded shadow w-100"
+        style="height: 300px; object-fit: cover"
+      />
+      <div
+        class="bg-white p-4 rounded shadow position-absolute top-50 h-75 translate-middle-y w-100"
+        style="z-index: 2; left: 90%;"
+      >
+        <h3 class="fw-bold mb-3 fs-2 text-center text-dark">{{ content.mission_title }}</h3>
+        <p class="text-center fs-5 text-dark">{{ content.mission_text }}</p>
       </div>
-    {% endif %}
-    <div class="text-right" style="flex: 1;">
-      <p>{{ content.section1_text }}</p>
     </div>
-  </section>
+    {% endif %}
+  </div>
+</section>
 
-  
-  <section class="about-section2" style="display: flex; gap: 20px; padding: 40px; align-items: center;">
-    <div class="text-left" style="flex: 1;">
-      <p>{{ content.section2_text }}</p>
+
+<section class="container py-5">
+  <div class="row align-items-center g-4 flex-md-row-reverse">
+    {% if content.vision_image %}
+    <div class="col-md-6 position-relative">
+      <img
+        src="{% static 'images/a_image2.png' %}"
+        alt="Vision"
+        class="img-fluid rounded shadow w-100"
+        style="height: 300px; object-fit: cover"
+      />
+      <div
+        class="bg-white p-4 rounded shadow position-absolute top-50 h-75 translate-middle-y w-100"
+        style="z-index: 2; right: 90%;"
+      >
+        <h3 class="fw-bold mb-3 fs-2 text-center text-dark ">{{ content.vision_title }}</h3>
+        <p class="text-center fs-5 text-dark">{{ content.vision_text }}</p>
+      </div>
     </div>
-    {% if content.section2_image %}
-      <div class="image-right" style="flex: 1;">
-        <img src="{{ content.section2_image.url }}" alt="Section 2 Image" style="width: 100%; height: auto;">
-      </div>
     {% endif %}
-  </section>
+  </div>
+</section>
 
-  
-  <section class="about-row-images" style="display: flex; gap: 15px; padding: 40px; justify-content: center;">
-  {% for img in row_images %}
-    {% if img %}
-      <div style="flex: 1; max-width: 23%;">
-        <img src="{{ img.url }}" alt="Row Image" style="width: 100%; height: auto;">
+<section class="py-5 text-center text-white">
+  <h2 class="fw-bold">Why Choose <span style="color: #bafd02">TRACO</span></h2>
+  <div class="container mt-5">
+    <div class="row g-4">
+      {% for item in why_items %}
+      <div class="col-12 col-md-6 col-lg-3">
+        <div
+          class="text-dark p-4 rounded-5 shadow h-100 w-100"
+          style="background: linear-gradient(to bottom, #d9d9d9, #f5f5f5)"
+        >
+          <img
+            src="{% static '' %}{{ item.icon }}"
+            alt="{{ item.title }}"
+            class="mb-3"
+            style="width: 150px; height: 130px"
+          />
+          <p class="fw-semibold fs-5">{{ item.title }}</p>
+        </div>
       </div>
-    {% endif %}
-  {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
 </section>
 {% endblock %}
-
