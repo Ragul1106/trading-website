@@ -45,11 +45,11 @@ INSTALLED_APPS = [
     'trading',
 ]
 
-if not DEBUG:
-    INSTALLED_APPS.extend([
-        'cloudinary_storage',
-        'cloudinary',
-    ])
+# if not DEBUG:
+#     INSTALLED_APPS.extend([
+#         'cloudinary_storage',
+#         'cloudinary',
+#     ])
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -139,15 +139,15 @@ MEDIA_ROOT = BASE_DIR / "media"
 # Local static storage (development)
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-if not DEBUG:  # Production with Cloudinary
-    DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
-    STATICFILES_STORAGE = "cloudinary_storage.storage.StaticHashedCloudinaryStorage"
+# if not DEBUG:  # Production with Cloudinary
+#     DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+#     STATICFILES_STORAGE = "cloudinary_storage.storage.StaticHashedCloudinaryStorage"
 
-    CLOUDINARY_STORAGE = {
-        "CLOUD_NAME": os.getenv("CLOUDINARY_CLOUD_NAME"),
-        "API_KEY": os.getenv("CLOUDINARY_API_KEY"),
-        "API_SECRET": os.getenv("CLOUDINARY_API_SECRET"),
-    }
+#     CLOUDINARY_STORAGE = {
+#         "CLOUD_NAME": os.getenv("CLOUDINARY_CLOUD_NAME"),
+#         "API_KEY": os.getenv("CLOUDINARY_API_KEY"),
+#         "API_SECRET": os.getenv("CLOUDINARY_API_SECRET"),
+#     }
 
 # Auth redirects
 LOGIN_REDIRECT_URL = "home"
