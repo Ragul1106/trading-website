@@ -77,7 +77,7 @@ def about_view(request):
         'content': content,
         'why_items': why_items
     }) 
-    
+                                                    
 def blog(request):
     hero = BlogHero.objects.first()
     tabs = BlogTab.objects.all().order_by("id")
