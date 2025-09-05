@@ -47,14 +47,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'crispy_bootstrap5',
+    'cloudinary_storage',
+    'cloudinary',
     'trading',
 ]
-
-if not DEBUG:
-    INSTALLED_APPS.extend([
-        'cloudinary_storage',
-        'cloudinary',
-    ])
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
