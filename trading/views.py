@@ -1,35 +1,31 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from django.contrib.auth import logout
-from .models import AboutContent, SiteAsset, BlogHero, BlogTab, BlogPost
+from .models import SiteAsset   
+from .models import AboutContent
+from .models import BlogHero, BlogTab, BlogPost
+from .forms import PartnerLeadForm, VerifyOtpForm
+import random
+from django.core.mail import send_mail, BadHeaderError
+from django.conf import settings
+from django.shortcuts import get_object_or_404
+from .models import PartnerLead, PartnerSection, PartnerBenefitsSection
 
 
+
+def home(request):
+    return render(request, "trading/layout/home.html")
 
 def get_bull_image():
     return SiteAsset.objects.filter(key="bull").first()
 
+
 def redirect_to_login(request):
     if request.user.is_authenticated:
-        return redirect('home')
-    return redirect('register')
+        return redirect("home")
+    return redirect("register")
 
-def user_login(request):
-    if request.method == "POST":
-        email = request.POST["email"]
-        password = request.POST["password"]
-
-        user = authenticate(username=email, password=password)
-        if user:
-            login(request, user)
-            return redirect("home")
-        else:
-            messages.error(request, "Invalid Credentials")
-            return redirect("login")
-
-    context = {"bull": get_bull_image()}
-    return render(request, "trading/layout/login.html", context)
 
 def register(request):
     if request.method == "POST":
@@ -57,12 +53,27 @@ def register(request):
     context = {"bull": get_bull_image()}
     return render(request, "trading/layout/register.html", context)
 
+
+def user_login(request):
+    if request.method == "POST":
+        email = request.POST["email"]
+        password = request.POST["password"]
+
+        user = authenticate(username=email, password=password)
+        if user:
+            login(request, user)
+            return redirect("home")
+        else:
+            messages.error(request, "Invalid Credentials")
+            return redirect("login")
+
+    context = {"bull": get_bull_image()}
+    return render(request, "trading/layout/login.html", context)
+
+
 def user_logout(request):
     logout(request)
-    return redirect('login')
-
-def home(request):
-    return render(request, "trading/layout/home.html")
+    return redirect("login")
 
 
 def about_view(request):
@@ -73,11 +84,11 @@ def about_view(request):
         {"title": "Invest in All-in-one Platform", "icon": "images/ar2.png"},
         {"title": "Get personalized service at 160+ branches in India", "icon": "images/ar1.png"},
     ]
-    return render(request, 'trading/layout/about.html', {
-        'content': content,
-        'why_items': why_items
-    }) 
-                                                    
+    return render(request, 'trading/layout/about.html', {'content': content, 'why_items': why_items})
+
+
+
+
 def blog(request):
     hero = BlogHero.objects.first()
     tabs = BlogTab.objects.all().order_by("id")
@@ -87,4 +98,82 @@ def blog(request):
         request,
         "trading/layout/blog.html",
         {"hero": hero, "tabs": tabs, "posts": posts}
+    )
+
+
+def partner(request):
+    section = PartnerSection.objects.first()  # <-- pulls your dynamic content
+    lead_form = PartnerLeadForm()
+    verify_form = VerifyOtpForm()
+    benefits_section = PartnerBenefitsSection.objects.filter(is_active=True).first()
+    benefits = benefits_section.items.all() if benefits_section else []
+
+    # STEP 1: Save lead + send OTP
+    if request.method == "POST" and request.POST.get("action") == "send_otp":
+        lead_form = PartnerLeadForm(request.POST)
+        if lead_form.is_valid():
+            lead = lead_form.save(commit=False)
+            lead.otp = f"{random.randint(0, 999999):06d}"
+            lead.is_verified = False
+            lead.save()
+
+            request.session["partner_lead_id"] = lead.id
+
+            subject = "Your TRACO Partner OTP"
+            body = (
+                f"Hello {lead.name},\n\n"
+                f"Your OTP is: {lead.otp}\n"
+                f"This code is valid for 10 minutes.\n\n"
+                "If you did not request this, please ignore this email."
+            )
+            try:
+                send_mail(
+                    subject,
+                    body,
+                    getattr(settings, "DEFAULT_FROM_EMAIL", None),
+                    [lead.email],
+                    fail_silently=False,
+                )
+                messages.success(request, "OTP sent to your email.")
+            except BadHeaderError:
+                messages.error(request, "Invalid header found while sending email.")
+            except Exception as e:
+                messages.error(request, f"Could not send OTP: {e}")
+
+            return redirect("partner")
+        else:
+            messages.error(request, "Please fix the errors and try again.")
+
+    # STEP 2: Verify OTP
+    if request.method == "POST" and request.POST.get("action") == "verify_otp":
+        verify_form = VerifyOtpForm(request.POST)
+        lead_id = request.session.get("partner_lead_id")
+        if not lead_id:
+            messages.error(request, "Start again by submitting the form.")
+            return redirect("partner")
+
+        lead = get_object_or_404(PartnerLead, pk=lead_id)
+        if verify_form.is_valid():
+            if verify_form.cleaned_data["otp"] == lead.otp:
+                lead.is_verified = True
+                lead.save(update_fields=["is_verified"])
+                messages.success(request, "OTP verified! We’ll contact you shortly.")
+                request.session.pop("partner_lead_id", None)
+                return redirect("partner")
+            else:
+                messages.error(request, "Incorrect OTP. Please try again.")
+
+    show_verify = bool(request.session.get("partner_lead_id"))
+
+    return render(
+        request,
+        "trading/layout/partner.html",
+        {
+            "section": section,
+            "lead_form": lead_form,
+            "verify_form": verify_form,
+            "show_verify": show_verify,
+            "benefits_section": benefits_section,
+            "benefits": benefits,
+        },
     )
