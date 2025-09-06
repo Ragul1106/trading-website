@@ -21,6 +21,25 @@ from .models import Blog
 from .models import Documentation
 from .models import PressKit
 
+from .models import InvestorApplication, InvestorPage 
+
+def investor_page(request):
+    page = InvestorPage.objects.first()
+    return render(request, "trading/layout/trade_investor_page.html", {"page": page})
+
+def apply_view(request):
+    if request.method == "POST":
+        fullname = request.POST.get("fullname", "").strip()
+        email = request.POST.get("email", "").strip()
+        if not fullname or not email:
+            messages.error(request, "Please provide name and email.")
+            return redirect("investor")
+        # Save application
+        app = InvestorApplication.objects.create(fullname=fullname, email=email)
+        messages.success(request, "Application submitted — we will contact you shortly.")
+        return redirect("investor")
+    return redirect("investor")
+
 
 def presskit_list(request):
     kits = PressKit.objects.filter(is_published=True)

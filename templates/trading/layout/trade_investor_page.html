@@ -1,0 +1,57 @@
+{% extends "trading/layout/base.html" %}
+{% load static %}
+
+{% block title %}{{ page.title }} — TRACO Trading{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <!-- Header -->
+  <div class="text-center mb-5">
+    <h1 class="fw-bold">{{ page.title }}</h1>
+    <p class="text-muted">{{ page.subtitle }}</p>
+  </div>
+
+  <!-- Info cards -->
+  <div class="row mb-5">
+    <div class="col-md-6">
+      <div class="card p-4 shadow-sm h-100">
+        <h5>{{ page.left_title }}</h5>
+        <p class="text-muted">{{ page.left_text }}</p>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card p-4 shadow-sm h-100">
+        <h5>{{ page.right_title }}</h5>
+        <p class="text-muted">{{ page.right_text }}</p>
+        {% if page.cta_text and page.cta_link %}
+          <a href="{{ page.cta_link }}" class="btn btn-primary">{{ page.cta_text }}</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Apply form -->
+  <section id="apply" class="mb-5">
+    <h3 class="mb-3">Apply to Invest</h3>
+    <form method="post" action="{% url 'apply' %}" class="card p-4 shadow-sm">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label for="id_fullname" class="form-label">Full Name</label>
+        <input type="text" class="form-control" id="id_fullname" name="fullname" required>
+      </div>
+      <div class="mb-3">
+        <label for="id_email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="id_email" name="email" required>
+      </div>
+      <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+  </section>
+
+  <!-- Optional hero image -->
+  {% if page.hero_image %}
+    <div class="text-center">
+      <img src="{{ page.hero_image.url }}" alt="Hero" class="img-fluid" style="max-height:240px">
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

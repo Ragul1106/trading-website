@@ -443,3 +443,30 @@ class PressKit(models.Model):
 
     def __str__(self):
         return self.title
+    
+class InvestorPage(models.Model):
+    title = models.CharField(max_length=140, default="Investor Page")
+    subtitle = models.CharField(max_length=255, blank=True)
+
+    left_title = models.CharField(max_length=100, blank=True)
+    left_text = models.TextField(blank=True)
+
+    right_title = models.CharField(max_length=100, blank=True)
+    right_text = models.TextField(blank=True)
+
+    cta_text = models.CharField(max_length=50, blank=True)
+    cta_link = models.CharField(max_length=255, blank=True)
+
+    hero_image = models.ImageField(upload_to='investor/', blank=True, null=True)
+
+    def __str__(self):
+        return self.title
+
+class InvestorApplication(models.Model):
+    fullname = models.CharField(max_length=200)
+    email = models.EmailField()
+    message = models.TextField(blank=True)
+    submitted_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.fullname} <{self.email}>"

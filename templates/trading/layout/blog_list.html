@@ -6,7 +6,7 @@
     {% for blog in blogs %}
     <div class="col-md-4 mb-4">
       <div class="card h-100 shadow-sm">
-        <img src="{{ blog.image.url }}" class="card-img-top" alt="{{ blog.title }}">
+        <img src="{{ blog.image.url }}" class="card-img-top blog-img" alt="{{ blog.title }}">
         <div class="card-body">
           <h5 class="card-title">{{ blog.title }}</h5>
           <p class="card-text text-muted">
@@ -22,4 +22,13 @@
     {% endfor %}
   </div>
 </div>
+<style>
+  .blog-img {
+  height: 250px;       
+  object-fit: cover;  
+  width: 100%;      
+  border-top-left-radius: 0.375rem; 
+  border-top-right-radius: 0.375rem;
+}
+</style>
 {% endblock %}

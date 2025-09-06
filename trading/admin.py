@@ -15,7 +15,7 @@ from .models import FAQ
 from .models import Blog
 from .models import Documentation
 from .models import PressKit
-
+from .models import InvestorApplication, InvestorPage
 
 
 
@@ -198,3 +198,13 @@ class PartnerBenefitsSectionAdmin(admin.ModelAdmin):
         if PartnerBenefitsSection.objects.exists():
             return False
         return super().has_add_permission(request)
+
+
+@admin.register(InvestorPage)
+class InvestorPageAdmin(admin.ModelAdmin):
+    list_display = ('title',)
+    
+@admin.register(InvestorApplication)
+class InvestorApplicationAdmin(admin.ModelAdmin):
+    list_display = ("fullname", "email", "submitted_at")
+    readonly_fields = ("submitted_at",)

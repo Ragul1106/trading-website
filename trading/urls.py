@@ -21,4 +21,6 @@ urlpatterns = [
     path("docs/", views.docs_list, name="docs_list"),
     path("docs/<slug:slug>/", views.docs_detail, name="docs_detail"),
     path("presskit/", views.presskit_list, name="presskit"),
+    path("investor/", views.investor_page, name="investor"),
+     path("investor/apply/", views.apply_view, name="apply"), 
 ]
