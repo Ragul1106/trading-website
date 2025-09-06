@@ -10,7 +10,7 @@ ENV/
 # Django
 *.log
 staticfiles/
-media/
+# media/
 
 # OS
 .DS_Store
