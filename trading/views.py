@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .models import SiteAsset   
+from .models import HomeSection, HomeSection2, HomeSection3, HomeSection4,  BannerSection, CommunitySection
 from .models import AboutContent
 from .models import BlogHero, BlogTab, BlogPost
 from .forms import PartnerLeadForm, VerifyOtpForm
@@ -11,11 +12,91 @@ from django.core.mail import send_mail, BadHeaderError
 from django.conf import settings
 from django.shortcuts import get_object_or_404
 from .models import PartnerLead, PartnerSection, PartnerBenefitsSection
+from .models import Market
+from .models import ReadyToken
+from .models import TradingOption
+from .models import FileCheck
+from .models import FAQ
+from .models import Blog
+from .models import Documentation
+from .models import PressKit
+
+
+def presskit_list(request):
+    kits = PressKit.objects.filter(is_published=True)
+    return render(request, "trading/layout/presskit_list.html", {"kits": kits})
+
+
+def docs_list(request):
+    docs = Documentation.objects.filter(is_published=True)
+    return render(request, "trading/layout/docs_list.html", {"docs": docs})
+
+def docs_detail(request, slug):
+    doc = get_object_or_404(Documentation, slug=slug, is_published=True)
+    return render(request, "trading/layout/docs_detail.html", {"doc": doc})
+
+def blog_list(request):
+    blogs = Blog.objects.filter(is_published=True)
+    return render(request, "trading/layout/blog_list.html", {"blogs": blogs})
+
+def blog_detail(request, slug):
+    blog = get_object_or_404(Blog, slug=slug, is_published=True)
+    return render(request, "trading/layout/blog_detail.html", {"blog": blog})
+
+def faq_list(request):
+    faqs = FAQ.objects.filter(is_active=True)
+    return render(request, "trading/layout/faq.html", {"faqs": faqs})
+
+def file_check(request):
+    if request.method == "POST":
+        title = request.POST.get("title")
+        file = request.FILES.get("file")
+
+        if title and file:
+            FileCheck.objects.create(title=title, file=file)
+            return redirect("file_check")
+
+    files = FileCheck.objects.all().order_by("-uploaded_at")
+    return render(request, "trading/layout/file_check.html", {"files": files})
+
+def option_list(request):
+    options = TradingOption.objects.all().order_by("expiry_date")
+    return render(request, "trading/layout/option_list.html", {"options": options})
+
+def ready_token_list(request):
+    tokens = ReadyToken.objects.filter(is_active=True).order_by("name")
+    return render(request, "trading/layout/ready_tokens.html", {"tokens": tokens})
+
+def market_explorer(request):
+    markets = Market.objects.prefetch_related("stocks").all()
+    return render(request, "trading/layout/market_explorer.html", {"markets": markets})
 
 
 
 def home(request):
-    return render(request, "trading/layout/home.html")
+    home_section = HomeSection.objects.first()
+    section2 = HomeSection2.objects.first()
+    steps = HomeSection3.objects.all().order_by("step_number")
+    section4 = HomeSection4.objects.first()  
+
+    users = []
+    community = None
+    if home_section:
+        users = [home_section.user1, home_section.user2, home_section.user3,
+                 home_section.user4, home_section.user5]
+        users = [u for u in users if u]
+        community = CommunitySection.objects.first()
+    banner = BannerSection.objects.first()
+    context = {
+        "banner": banner,
+        "community": community,
+        "home": home_section,
+        "users": users,
+        "section2": section2,
+        "steps": steps,
+        "section4": section4,
+    }
+    return render(request, "trading/layout/home.html", context)
 
 def get_bull_image():
     return SiteAsset.objects.filter(key="bull").first()
@@ -102,13 +183,12 @@ def blog(request):
 
 
 def partner(request):
-    section = PartnerSection.objects.first()  # <-- pulls your dynamic content
+    section = PartnerSection.objects.first()  
     lead_form = PartnerLeadForm()
     verify_form = VerifyOtpForm()
     benefits_section = PartnerBenefitsSection.objects.filter(is_active=True).first()
     benefits = benefits_section.items.all() if benefits_section else []
 
-    # STEP 1: Save lead + send OTP
     if request.method == "POST" and request.POST.get("action") == "send_otp":
         lead_form = PartnerLeadForm(request.POST)
         if lead_form.is_valid():
@@ -144,7 +224,6 @@ def partner(request):
         else:
             messages.error(request, "Please fix the errors and try again.")
 
-    # STEP 2: Verify OTP
     if request.method == "POST" and request.POST.get("action") == "verify_otp":
         verify_form = VerifyOtpForm(request.POST)
         lead_id = request.session.get("partner_lead_id")

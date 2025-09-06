@@ -1,0 +1,32 @@
+{% extends "trading/layout/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="mb-4">Press Kit</h1>
+    <p class="text-muted">Download our official logos, media files, and brand assets.</p>
+    
+    <div class="row">
+        {% for kit in kits %}
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+                {% if kit.logo %}
+                    <img src="{{ kit.logo.url }}" class="card-img-top" alt="{{ kit.title }}">
+                {% else %}
+                    <img src="{% static 'images/logo.png' %}" class="card-img-top" alt="No Logo">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ kit.title }}</h5>
+                    <p class="card-text">{{ kit.description|truncatewords:20 }}</p>
+                    {% if kit.media_file %}
+                        <a href="{{ kit.media_file.url }}" class="btn btn-primary" download>Download Media</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>No press kit items available right now.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,67 @@
+[
+  {
+    "model": "trading.tradingoption",
+    "pk": 1,
+    "fields": {
+      "name": "Bitcoin Call Option",
+      "symbol": "BTC",
+      "option_type": "CALL",
+      "strike_price": "67000.00",
+      "expiry_date": "2025-09-30",
+      "premium": "2500.00",
+      "is_active": true
+    }
+  },
+  {
+    "model": "trading.tradingoption",
+    "pk": 2,
+    "fields": {
+      "name": "Ethereum Put Option",
+      "symbol": "ETH",
+      "option_type": "PUT",
+      "strike_price": "3000.00",
+      "expiry_date": "2025-09-25",
+      "premium": "150.00",
+      "is_active": true
+    }
+  },
+  {
+    "model": "trading.tradingoption",
+    "pk": 3,
+    "fields": {
+      "name": "Cardano Call Option",
+      "symbol": "ADA",
+      "option_type": "CALL",
+      "strike_price": "0.60",
+      "expiry_date": "2025-09-20",
+      "premium": "0.05",
+      "is_active": true
+    }
+  },
+  {
+    "model": "trading.tradingoption",
+    "pk": 4,
+    "fields": {
+      "name": "Ripple Put Option",
+      "symbol": "XRP",
+      "option_type": "PUT",
+      "strike_price": "0.50",
+      "expiry_date": "2025-09-28",
+      "premium": "0.03",
+      "is_active": true
+    }
+  },
+  {
+    "model": "trading.tradingoption",
+    "pk": 5,
+    "fields": {
+      "name": "Tether Call Option",
+      "symbol": "USDT",
+      "option_type": "CALL",
+      "strike_price": "1.10",
+      "expiry_date": "2025-09-15",
+      "premium": "0.01",
+      "is_active": true
+    }
+  }
+]

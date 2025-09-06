@@ -1,0 +1,86 @@
+[
+  {
+    "model": "trading.market",
+    "pk": 1,
+    "fields": {
+      "name": "New York Stock Exchange",
+      "country": "USA"
+    }
+  },
+  {
+    "model": "trading.market",
+    "pk": 2,
+    "fields": {
+      "name": "National Stock Exchange",
+      "country": "India"
+    }
+  },
+  {
+    "model": "trading.market",
+    "pk": 3,
+    "fields": {
+      "name": "Tokyo Stock Exchange",
+      "country": "Japan"
+    }
+  },
+  {
+    "model": "trading.stock",
+    "pk": 1,
+    "fields": {
+      "market": 1,
+      "name": "Apple Inc.",
+      "symbol": "AAPL",
+      "price": "187.50"
+    }
+  },
+  {
+    "model": "trading.stock",
+    "pk": 2,
+    "fields": {
+      "market": 1,
+      "name": "Tesla Inc.",
+      "symbol": "TSLA",
+      "price": "245.30"
+    }
+  },
+  {
+    "model": "trading.stock",
+    "pk": 3,
+    "fields": {
+      "market": 2,
+      "name": "Reliance Industries",
+      "symbol": "RELIANCE",
+      "price": "2700.00"
+    }
+  },
+  {
+    "model": "trading.stock",
+    "pk": 4,
+    "fields": {
+      "market": 2,
+      "name": "Infosys Limited",
+      "symbol": "INFY",
+      "price": "1500.00"
+    }
+  },
+  {
+    "model": "trading.stock",
+    "pk": 5,
+    "fields": {
+      "market": 3,
+      "name": "Toyota Motor Corp",
+      "symbol": "7203.T",
+      "price": "2500.00"
+    }
+  },
+  {
+    "model": "trading.stock",
+    "pk": 6,
+    "fields": {
+      "market": 3,
+      "name": "Sony Group Corp",
+      "symbol": "6758.T",
+      "price": "12500.00"
+    }
+  }
+]

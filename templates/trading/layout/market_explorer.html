@@ -1,0 +1,42 @@
+{% extends 'trading/layout/base.html' %} {% load static %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Market Explorer</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .market { margin-bottom: 30px; }
+        .stocks { border-collapse: collapse; width: 100%; }
+        .stocks th, .stocks td { border: 1px solid #ddd; padding: 8px; }
+        .stocks th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h1>Market Explorer</h1>
+    {% for market in markets %}
+        <div class="market">
+            <h2>{{ market.name }} ({{ market.country }})</h2>
+            <table class="stocks">
+                <tr>
+                    <th style="color: black;">Symbol</th>
+                    <th style="color: black;">Name</th>
+                    <th style="color: black;">Price</th>
+                </tr>
+                {% for stock in market.stocks.all %}
+                <tr>
+                    <td >{{ stock.symbol }}</td>
+                    <td>{{ stock.name }}</td>
+                    <td>${{ stock.price }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3">No stocks available</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% endfor %}
+</body>
+</html>
+{% endblock %}

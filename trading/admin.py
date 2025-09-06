@@ -2,13 +2,86 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
 from .models import SiteAsset
+from .models import HomeSection, HomeSection2, HomeSection3, HomeSection4, CommunitySection, BannerSection
 from .models import  WhyChooseItem, AboutContent, BlogHero
 from .models import BlogTab, BlogPost
 from django.contrib import admin
 from .models import PartnerSection, PartnerLead, PartnerBenefitsSection, PartnerBenefit
+from .models import Market, Stock
+from .models import ReadyToken
+from .models import TradingOption
+from .models import FileCheck
+from .models import FAQ
+from .models import Blog
+from .models import Documentation
+from .models import PressKit
+
+
 
 
 admin.site.unregister(User)
+
+
+
+@admin.register(PressKit)
+class PressKitAdmin(admin.ModelAdmin):
+    list_display = ("title", "is_published", "created_at")
+    list_filter = ("is_published",)
+    search_fields = ("title", "description")
+
+@admin.register(Documentation)
+class DocumentationAdmin(admin.ModelAdmin):
+    list_display = ('title', 'is_published', 'created_at', 'updated_at')
+    prepopulated_fields = {"slug": ("title",)}
+    search_fields = ('title', 'content')
+    list_filter = ('is_published', 'created_at')
+
+@admin.register(Blog)
+class BlogAdmin(admin.ModelAdmin):
+    list_display = ("title", "author", "date", "is_published")
+    list_filter = ("is_published", "date")
+    prepopulated_fields = {"slug": ("title",)}
+    search_fields = ("title", "content")
+
+@admin.register(FAQ)
+class FAQAdmin(admin.ModelAdmin):
+    list_display = ("question", "is_active", "created_at")
+    list_filter = ("is_active", "created_at")
+    search_fields = ("question", "answer")
+
+@admin.register(FileCheck)
+class FileCheckAdmin(admin.ModelAdmin):
+    list_display = ("title", "file", "uploaded_at")
+    search_fields = ("title",)
+    list_filter = ("uploaded_at",)
+    
+@admin.register(TradingOption)
+class TradingOptionAdmin(admin.ModelAdmin):
+    list_display = ("name", "symbol", "option_type", "strike_price", "expiry_date", "premium", "is_active")
+    list_filter = ("option_type", "is_active")
+    search_fields = ("name", "symbol")
+
+
+@admin.register(ReadyToken)
+class ReadyTokenAdmin(admin.ModelAdmin):
+    list_display = ("name", "symbol", "price", "market_cap", "volume_24h", "is_active")
+    list_filter = ("is_active",)
+    search_fields = ("name", "symbol")
+
+class StockInline(admin.TabularInline):
+    model = Stock
+    extra = 1
+
+@admin.register(Market)
+class MarketAdmin(admin.ModelAdmin):
+    list_display = ("name", "country")
+    inlines = [StockInline]
+
+@admin.register(Stock)
+class StockAdmin(admin.ModelAdmin):
+    list_display = ("name", "symbol", "price", "market")
+    list_filter = ("market",)
+
 
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
@@ -21,6 +94,55 @@ class CustomUserAdmin(UserAdmin):
 class SiteAssetAdmin(admin.ModelAdmin):
     list_display = ("key", "image")
     search_fields = ("key",)
+    
+
+
+@admin.register(HomeSection)
+class HomeSectionAdmin(admin.ModelAdmin):
+    list_display = ("title", "subtitle", "updated_at")
+    search_fields = ("title", "subtitle")
+
+
+@admin.register(HomeSection2)
+class HomeSection2Admin(admin.ModelAdmin):
+    list_display = ("id", "short_para1", "short_para2", "short_para3", "image")
+
+    def short_para1(self, obj):
+        return obj.paragraph1[:50] + "..." if obj.paragraph1 else ""
+    short_para1.short_description = "Paragraph 1"
+
+    def short_para2(self, obj):
+        return obj.paragraph2[:50] + "..." if obj.paragraph2 else ""
+    short_para2.short_description = "Paragraph 2"
+
+    def short_para3(self, obj):
+        return obj.paragraph3[:50] + "..." if obj.paragraph3 else ""
+    short_para3.short_description = "Paragraph 3"
+
+
+@admin.register(HomeSection3)
+class HomeSection3Admin(admin.ModelAdmin):
+    list_display = ("step_number", "title", "short_description", "highlight")
+    list_editable = ("highlight",)
+
+    def short_description(self, obj):
+        return obj.description[:60] + "..." if obj.description else ""
+    short_description.short_description = "Description"
+
+@admin.register(HomeSection4)
+class HomeSection4Admin(admin.ModelAdmin):
+    list_display = ("heading",)
+
+@admin.register(BannerSection)
+class BannerSectionAdmin(admin.ModelAdmin):
+    list_display = ("title",)
+
+
+
+
+@admin.register(CommunitySection)
+class CommunitySectionAdmin(admin.ModelAdmin):
+    list_display = ("heading",)
 
 
 class WhyChooseInline(admin.TabularInline):
@@ -50,9 +172,6 @@ class BlogPostAdmin(admin.ModelAdmin):
     list_filter = ("category",)
     search_fields = ("title", "short_desc")
    
-   
-   
-   
 @admin.register(PartnerLead)
 class PartnerLeadAdmin(admin.ModelAdmin):
     list_display = ("name", "email", "phone", "city", "is_verified", "created_at")
@@ -75,7 +194,6 @@ class PartnerBenefitsSectionAdmin(admin.ModelAdmin):
     list_display = ("heading_line1", "is_active")
     inlines = [PartnerBenefitInline]
 
-    # Optional: allow only one section instance
     def has_add_permission(self, request):
         if PartnerBenefitsSection.objects.exists():
             return False

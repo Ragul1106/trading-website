@@ -1,0 +1,15 @@
+{% extends "trading/layout/base.html" %}
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4">📘 Documentation</h2>
+  <ul class="list-group">
+    {% for doc in docs %}
+      <li class="list-group-item">
+        <a href="{% url 'docs_detail' doc.slug %}">{{ doc.title }}</a>
+      </li>
+    {% empty %}
+      <li class="list-group-item">No documentation available.</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

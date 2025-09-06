@@ -1,0 +1,38 @@
+[
+  {
+    "model": "trading.presskit",
+    "pk": 1,
+    "fields": {
+      "title": "Trading App Logo Pack",
+      "description": "Download our official logos in PNG and SVG formats. Use them for media, press, and promotional purposes. Please do not alter the logo colors.",
+      "logo": "presskit/logos/trading_logo.png",
+      "media_file": "presskit/media/trading_logo_pack.zip",
+      "is_published": true,
+      "created_at": "2025-09-06T11:00:00Z"
+    }
+  },
+  {
+    "model": "trading.presskit",
+    "pk": 2,
+    "fields": {
+      "title": "Brand Guidelines",
+      "description": "A detailed PDF that explains how to use the Trading App brand assets, including logo usage, colors, and typography.",
+      "logo": "presskit/logos/brand_guide_cover.png",
+      "media_file": "presskit/media/trading_brand_guidelines.pdf",
+      "is_published": true,
+      "created_at": "2025-09-06T11:05:00Z"
+    }
+  },
+  {
+    "model": "trading.presskit",
+    "pk": 3,
+    "fields": {
+      "title": "Press Release - September 2025",
+      "description": "Our official press release announcing the new Trading App features, including real-time analytics and margin trading.",
+      "logo": null,
+      "media_file": "presskit/media/press_release_sep2025.pdf",
+      "is_published": true,
+      "created_at": "2025-09-06T11:10:00Z"
+    }
+  }
+]

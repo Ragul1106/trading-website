@@ -1,0 +1,52 @@
+[
+  {
+    "model": "trading.faq",
+    "pk": 1,
+    "fields": {
+      "question": "What is the Trading Platform?",
+      "answer": "Our trading platform allows you to buy and sell stocks, tokens, and financial instruments in real-time.",
+      "is_active": true,
+      "created_at": "2025-09-06T10:00:00Z"
+    }
+  },
+  {
+    "model": "trading.faq",
+    "pk": 2,
+    "fields": {
+      "question": "How do I open an account?",
+      "answer": "Simply register with your email, complete KYC verification, and you’ll be able to start trading immediately.",
+      "is_active": true,
+      "created_at": "2025-09-06T10:05:00Z"
+    }
+  },
+  {
+    "model": "trading.faq",
+    "pk": 3,
+    "fields": {
+      "question": "Is my data secure?",
+      "answer": "Yes, we use SSL encryption and follow industry standards to keep your personal and financial data safe.",
+      "is_active": true,
+      "created_at": "2025-09-06T10:10:00Z"
+    }
+  },
+  {
+    "model": "trading.faq",
+    "pk": 4,
+    "fields": {
+      "question": "Can I trade on mobile?",
+      "answer": "Yes, our platform is fully mobile-responsive and also available as an Android and iOS app.",
+      "is_active": true,
+      "created_at": "2025-09-06T10:15:00Z"
+    }
+  },
+  {
+    "model": "trading.faq",
+    "pk": 5,
+    "fields": {
+      "question": "What fees do you charge?",
+      "answer": "We charge a small transaction fee per trade. Full details are available on the Pricing page.",
+      "is_active": true,
+      "created_at": "2025-09-06T10:20:00Z"
+    }
+  }
+]

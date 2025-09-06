@@ -1,0 +1,62 @@
+[
+  {
+    "model": "trading.readytoken",
+    "pk": 1,
+    "fields": {
+      "name": "Bitcoin",
+      "symbol": "BTC",
+      "price": "65000.00",
+      "market_cap": "1250000000000.00",
+      "volume_24h": "35000000000.00",
+      "is_active": true
+    }
+  },
+  {
+    "model": "trading.readytoken",
+    "pk": 2,
+    "fields": {
+      "name": "Ethereum",
+      "symbol": "ETH",
+      "price": "3200.00",
+      "market_cap": "380000000000.00",
+      "volume_24h": "20000000000.00",
+      "is_active": true
+    }
+  },
+  {
+    "model": "trading.readytoken",
+    "pk": 3,
+    "fields": {
+      "name": "Tether",
+      "symbol": "USDT",
+      "price": "1.00",
+      "market_cap": "95000000000.00",
+      "volume_24h": "45000000000.00",
+      "is_active": true
+    }
+  },
+  {
+    "model": "trading.readytoken",
+    "pk": 4,
+    "fields": {
+      "name": "Ripple",
+      "symbol": "XRP",
+      "price": "0.55",
+      "market_cap": "29000000000.00",
+      "volume_24h": "2500000000.00",
+      "is_active": true
+    }
+  },
+  {
+    "model": "trading.readytoken",
+    "pk": 5,
+    "fields": {
+      "name": "Cardano",
+      "symbol": "ADA",
+      "price": "0.45",
+      "market_cap": "16000000000.00",
+      "volume_24h": "1200000000.00",
+      "is_active": true
+    }
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "model": "trading.documentation",
+    "pk": 1,
+    "fields": {
+      "title": "Getting Started with Trading App",
+      "slug": "getting-started-with-trading-app",
+      "content": "<p>Welcome to our Trading App 🚀. This guide helps you set up your account, verify KYC, and start trading within minutes.</p><ul><li>Create an account</li><li>Verify identity</li><li>Deposit funds</li><li>Start trading securely</li></ul>",
+      "is_published": true,
+      "created_at": "2025-09-06T10:00:00Z",
+      "updated_at": "2025-09-06T10:00:00Z"
+    }
+  },
+  {
+    "model": "trading.documentation",
+    "pk": 2,
+    "fields": {
+      "title": "API Integration Guide",
+      "slug": "api-integration-guide",
+      "content": "<p>Our API allows developers to build custom trading bots, integrate market data, and manage portfolios programmatically.</p><h4>Steps:</h4><ol><li>Generate API key in profile settings</li><li>Use our REST API or WebSocket</li><li>Implement trading strategies</li></ol>",
+      "is_published": true,
+      "created_at": "2025-09-06T10:05:00Z",
+      "updated_at": "2025-09-06T10:05:00Z"
+    }
+  },
+  {
+    "model": "trading.documentation",
+    "pk": 3,
+    "fields": {
+      "title": "Margin Trading Guide",
+      "slug": "margin-trading-guide",
+      "content": "<p>Margin trading allows you to trade with leverage and increase potential profits. Please trade responsibly ⚠️.</p><ul><li>Understand risks</li><li>Set stop-loss orders</li><li>Monitor positions closely</li></ul>",
+      "is_published": true,
+      "created_at": "2025-09-06T10:10:00Z",
+      "updated_at": "2025-09-06T10:10:00Z"
+    }
+  },
+  {
+    "model": "trading.documentation",
+    "pk": 4,
+    "fields": {
+      "title": "Risk Management Basics",
+      "slug": "risk-management-basics",
+      "content": "<p>Proper risk management is key to long-term success in trading.</p><ul><li>Never risk more than 2% per trade</li><li>Diversify portfolio</li><li>Use take-profit and stop-loss orders</li></ul>",
+      "is_published": true,
+      "created_at": "2025-09-06T10:15:00Z",
+      "updated_at": "2025-09-06T10:15:00Z"
+    }
+  }
+]

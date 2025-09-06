@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.utils.text import slugify
 
 class SiteAsset(models.Model):
     key = models.CharField(max_length=50, unique=True)
@@ -7,6 +7,147 @@ class SiteAsset(models.Model):
 
     def __str__(self):
         return self.key
+
+
+class HomeSection(models.Model):
+    title = models.CharField(
+        max_length=200,
+        default="Build Confidence With Every Single Trade."
+    )
+    title1 = models.CharField(
+        max_length=200,
+        default="Invest for Your Future"
+    )
+    subtitle = models.CharField(
+        max_length=200,
+        default="Keep Your Money Safe !!!!"
+    )
+    
+    description = models.CharField(
+        max_length=250,
+        default="Your Trading Journey Started Here…."
+    )
+    realtime_users_count = models.CharField(
+        max_length=50,
+        default="500+"
+    )
+    realtime_users_label = models.CharField(
+        max_length=100,
+        default="Realtime Users"
+    )
+
+    bg_banner = models.ImageField(upload_to="home/", blank=True, null=True)
+    banner_user = models.ImageField(upload_to="home/", blank=True, null=True)
+    vertical_bar = models.ImageField(upload_to="home/", blank=True, null=True)
+    arrow = models.ImageField(upload_to="home/", blank=True, null=True)
+
+    user1 = models.ImageField(upload_to="home/users/", blank=True, null=True)
+    user2 = models.ImageField(upload_to="home/users/", blank=True, null=True)
+    user3 = models.ImageField(upload_to="home/users/", blank=True, null=True)
+    user4 = models.ImageField(upload_to="home/users/", blank=True, null=True)
+    user5 = models.ImageField(upload_to="home/users/", blank=True, null=True)
+
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Home Hero_Section"
+        verbose_name_plural = "Home Hero_Section"
+
+    def __str__(self):
+        return f"Home Section (updated {self.updated_at:%Y-%m-%d %H:%M})"
+
+
+class HomeSection2(models.Model):
+    paragraph1 = models.TextField(
+        blank=True, null=True, help_text="First paragraph (normal text)"
+    )
+    paragraph2 = models.TextField(
+        blank=True, null=True, help_text="Second paragraph (highlighted in green)"
+    )
+    paragraph3 = models.TextField(
+        blank=True, null=True, help_text="Third paragraph (footer text)"
+    )
+    image = models.ImageField(upload_to="homepage/", blank=True, null=True)
+    image20years = models.ImageField(upload_to="homepage/", blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Home Experience_Section"
+        verbose_name_plural = "Home Experience_Section"
+
+    def __str__(self):
+        return "Home Section 2 Content"
+
+
+class HomeSection3(models.Model):
+    step_number = models.CharField(max_length=5, help_text="Step number like 01, 02, 03")
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True, null=True)
+    highlight = models.BooleanField(
+        default=False,
+        help_text="Mark this step as highlighted (green middle box)"
+    )
+
+    class Meta:
+        verbose_name = "Home Features_Section"
+        verbose_name_plural = "Home Features_Section"
+        ordering = ["step_number"]
+
+    def __str__(self):
+        return f"Step {self.step_number} - {self.title}"
+
+class HomeSection4(models.Model):
+    heading = models.CharField(max_length=200, default="How it Works?")
+
+    apply_title = models.CharField(max_length=100, default="Apply")
+    apply_desc = models.TextField(default="Join thousands of traders who trust our platform every day.")
+    apply_img = models.ImageField(upload_to="section4/", blank=True, null=True)
+
+    assess_title = models.CharField(max_length=100, default="Assessment")
+    assess_desc = models.TextField(default="Take our short assessment to discover your trading style, risk tolerance, and the tools that fit you best.")
+    assess_img = models.ImageField(upload_to="section4/", blank=True, null=True)
+
+    fund_title = models.CharField(max_length=100, default="Get Funded")
+    fund_desc = models.TextField(default="Trade with our capital and keep up to 90% of the profits.")
+    fund_img = models.ImageField(upload_to="section4/", blank=True, null=True)
+
+    trade_title = models.CharField(max_length=100, default="Trade & Grow")
+    trade_desc = models.TextField(default="Whether you're just starting or scaling up, our tools, support, and funding help you grow with confidence.")
+    trade_img = models.ImageField(upload_to="section4/", blank=True, null=True)
+    
+    class Meta:
+        verbose_name = "Home How_It_Works_Section"
+        verbose_name_plural = "Home How_It_Works_Section"
+
+    def __str__(self):
+        return self.heading
+    
+class BannerSection(models.Model):
+    title = models.CharField(max_length=200, default="Welcome to Our Platform")
+    banner_img = models.ImageField(upload_to="banner/", blank=True, null=True)
+    
+    class Meta:
+        verbose_name = "Home Dashboard_Section"
+        verbose_name_plural = "Home Dashbord_Section"
+        
+    def __str__(self):
+        return self.title
+
+class CommunitySection(models.Model):
+    heading = models.CharField(max_length=200, default="Build a Strong Community")
+    description = models.TextField(default="Join a global network of passionate traders...")
+    
+    image1 = models.ImageField(upload_to="community/", blank=True, null=True)
+    image2 = models.ImageField(upload_to="community/", blank=True, null=True)
+    image3 = models.ImageField(upload_to="community/", blank=True, null=True)
+    image4 = models.ImageField(upload_to="community/", blank=True, null=True)
+    image5 = models.ImageField(upload_to="community/", blank=True, null=True)
+    
+    class Meta:
+        verbose_name = "Home community_Section"
+        verbose_name_plural = "Home community_Section"
+
+    def __str__(self):
+        return self.heading
 
 
 class AboutContent(models.Model):
@@ -185,3 +326,120 @@ class PartnerBenefit(models.Model):
 
     def __str__(self):
         return f"{self.order}. {self.title}"
+
+
+class Market(models.Model):
+    name = models.CharField(max_length=100)
+    country = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+class Stock(models.Model):
+    market = models.ForeignKey(Market, on_delete=models.CASCADE, related_name="stocks")
+    name = models.CharField(max_length=100)
+    symbol = models.CharField(max_length=10)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return f"{self.symbol} - {self.name}"
+    
+class ReadyToken(models.Model):
+    name = models.CharField(max_length=100)
+    symbol = models.CharField(max_length=10, unique=True)
+    price = models.DecimalField(max_digits=12, decimal_places=2)
+    market_cap = models.DecimalField(max_digits=15, decimal_places=2, blank=True, null=True)
+    volume_24h = models.DecimalField(max_digits=15, decimal_places=2, blank=True, null=True)
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f"{self.symbol} - {self.name}"
+    
+class TradingOption(models.Model):
+    name = models.CharField(max_length=100)       
+    symbol = models.CharField(max_length=10)      
+    option_type = models.CharField(
+        max_length=10,
+        choices=[("CALL", "Call"), ("PUT", "Put")]
+    )
+    strike_price = models.DecimalField(max_digits=15, decimal_places=2)
+    expiry_date = models.DateField()
+    premium = models.DecimalField(max_digits=15, decimal_places=2)
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f"{self.symbol} {self.option_type} @ {self.strike_price}"
+    
+class FileCheck(models.Model):
+    title = models.CharField(max_length=200)
+    file = models.FileField(upload_to="uploads/files/")
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+    
+class FAQ(models.Model):
+    question = models.CharField(max_length=255)
+    answer = models.TextField()
+    is_active = models.BooleanField(default=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "FAQ"
+        verbose_name_plural = "FAQs"
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return self.question
+    
+class Blog(models.Model):
+    title = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True)
+    image = models.ImageField(upload_to="blogs/")
+    content = models.TextField()
+    author = models.CharField(max_length=100, default="Admin")
+    date = models.DateTimeField(auto_now_add=True)
+    is_published = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ["-date"]
+
+    def __str__(self):
+        return self.title
+    
+
+
+class Documentation(models.Model):
+    title = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True, blank=True)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    is_published = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['title']
+
+    def __str__(self):
+        return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+        
+class PressKit(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    logo = models.ImageField(upload_to="presskit/logos/", blank=True, null=True)
+    media_file = models.FileField(upload_to="presskit/media/", blank=True, null=True)
+    is_published = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Press Kit"
+        verbose_name_plural = "Press Kits"
+
+    def __str__(self):
+        return self.title

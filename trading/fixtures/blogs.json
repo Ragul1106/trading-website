@@ -1,0 +1,54 @@
+[
+  {
+    "model": "trading.blog",
+    "pk": 1,
+    "fields": {
+      "title": "Getting Started with Stock Trading",
+      "slug": "getting-started-with-stock-trading",
+      "image": "blogs/stock_trading.jpg",
+      "content": "Stock trading is one of the most popular ways to grow wealth. In this blog, we’ll guide you through the basics of trading, how to open a demat account, and strategies for beginners.",
+      "author": "Admin",
+      "date": "2025-09-06T09:00:00Z",
+      "is_published": true
+    }
+  },
+  {
+    "model": "trading.blog",
+    "pk": 2,
+    "fields": {
+      "title": "Top 5 Cryptocurrencies to Watch in 2025",
+      "slug": "top-5-cryptocurrencies-2025",
+      "image": "blogs/crypto_watch.jpg",
+      "content": "Cryptocurrencies continue to dominate global finance. Here are the top 5 coins to watch in 2025 based on adoption, technology, and market performance.",
+      "author": "Admin",
+      "date": "2025-09-06T09:30:00Z",
+      "is_published": true
+    }
+  },
+  {
+    "model": "trading.blog",
+    "pk": 3,
+    "fields": {
+      "title": "How to Diversify Your Portfolio",
+      "slug": "how-to-diversify-your-portfolio",
+      "image": "blogs/diversify.jpg",
+      "content": "Diversification is key to reducing risk in trading. Learn how to balance stocks, ETFs, commodities, and crypto assets to maximize returns while minimizing risks.",
+      "author": "Admin",
+      "date": "2025-09-06T10:00:00Z",
+      "is_published": true
+    }
+  },
+  {
+    "model": "trading.blog",
+    "pk": 4,
+    "fields": {
+      "title": "Beginner’s Guide to Technical Analysis",
+      "slug": "beginners-guide-to-technical-analysis",
+      "image": "blogs/technical_analysis.jpg",
+      "content": "Technical analysis helps traders predict price movements by analyzing charts, candlestick patterns, and trading volumes. In this blog, we break down the basics every beginner should know.",
+      "author": "Admin",
+      "date": "2025-09-06T10:30:00Z",
+      "is_published": true
+    }
+  }
+]

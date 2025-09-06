@@ -1,0 +1,11 @@
+{% extends "trading/layout/base.html" %}
+{% block content %}
+<div class="container mt-5">
+  <h2>{{ doc.title }}</h2>
+  <p><small>Last updated: {{ doc.updated_at|date:"M d, Y" }}</small></p>
+  <div class="mt-3">
+    {{ doc.content|safe }}
+  </div>
+  <a href="{% url 'docs_list' %}" class="btn btn-secondary mt-4">← Back to Docs</a>
+</div>
+{% endblock %}

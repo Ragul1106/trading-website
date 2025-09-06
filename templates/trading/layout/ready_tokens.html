@@ -1,0 +1,45 @@
+{% extends 'trading/layout/base.html' %} {% load static %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ready Tokens</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        h1 { margin-bottom: 20px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: center; }
+        th { background: #0b0f0c; color: white; }
+    </style>
+</head>
+<body>
+    <h1>Ready Tokens</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Symbol</th>
+                <th>Name</th>
+                <th>Price (USD)</th>
+                <th>Market Cap</th>
+                <th>24h Volume</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for token in tokens %}
+            <tr>
+                <td>{{ token.symbol }}</td>
+                <td>{{ token.name }}</td>
+                <td>${{ token.price }}</td>
+                <td>${{ token.market_cap|default:"-" }}</td>
+                <td>${{ token.volume_24h|default:"-" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No tokens available</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+{% endblock %}
